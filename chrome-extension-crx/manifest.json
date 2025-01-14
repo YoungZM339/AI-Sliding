@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "AI-Sliding 智能浏览器滑动助手",
+  "version": "1.1.0",
+  "description": "AI-Sliding 基于大语言模型的智能滑动翻译与解释助手，让翻译和理解更加便捷",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/favicon-16x16.png",
+      "32": "images/favicon-32x32.png",
+      "192": "images/android-chrome-192x192.png"
+    }
+  },
+  "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "192": "images/android-chrome-192x192.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "marked.min.js",
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "marked.min.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

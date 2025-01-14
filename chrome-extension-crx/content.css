@@ -1,0 +1,161 @@
+#action-menu {
+    position: fixed;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    padding: 4px 0;
+    z-index: 2147483647;
+    font-size: 14px;
+    min-width: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.98);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    pointer-events: auto;
+    transform-origin: top left;
+    will-change: transform;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    display: none;
+}
+
+.action-item {
+    padding: 8px 16px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: nowrap;
+}
+
+.action-item:hover {
+    background-color: #f5f5f5;
+}
+
+#translate-popup {
+    position: fixed;
+    background: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+    z-index: 2147483647;
+    max-width: 400px;
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.98);
+    pointer-events: auto;
+    transform-origin: top left;
+    will-change: transform, opacity;
+    display: none;
+}
+
+#translate-popup.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95);
+    pointer-events: none;
+}
+
+.translated-text {
+    color: #24292e;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Markdown样式保持不变 */
+.markdown-body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    word-wrap: break-word;
+    color: #24292e;
+}
+
+.markdown-body strong {
+    font-weight: 600;
+    color: #000;
+}
+
+.markdown-body em {
+    font-style: italic;
+    color: #5a5a5a;
+}
+
+.markdown-body ul, .markdown-body ol {
+    padding-left: 2em;
+    margin: 8px 0;
+}
+
+.markdown-body li {
+    margin: 4px 0;
+}
+
+.markdown-body blockquote {
+    margin: 8px 0;
+    padding: 0 1em;
+    color: #6a737d;
+    border-left: 0.25em solid #dfe2e5;
+    background-color: #f6f8fa;
+}
+
+.markdown-body code {
+    padding: 0.2em 0.4em;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27,31,35,0.05);
+    border-radius: 3px;
+    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+.markdown-body pre {
+    margin: 8px 0;
+    padding: 16px;
+    overflow: auto;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 6px;
+}
+
+.markdown-body p {
+    margin: 8px 0;
+}
+
+.markdown-body a {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.markdown-body a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #dc3545;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+    border: 1px solid #dc3545;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.loading {
+    text-align: center;
+    padding: 12px;
+    color: #666;
+    font-style: italic;
+} 
