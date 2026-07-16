@@ -1,30 +1,40 @@
-# AI-Sliding 智能浏览器滑动助手
+# AI Sliding
 
-AI-Sliding 是一个 Chrome 浏览器扩展，用大语言模型为选中文本提供翻译和解释。
+一个 Chrome Manifest V3 浏览器扩展。用户在网页中选中文本后，可通过内联菜单请求翻译或解释；模型接口、目标语言和提示词在扩展弹窗中配置。
 
-## Features
+## 功能
 
-- 划词翻译与上下文解释
-- 中文、英语、日语等多语言支持
-- 自定义 API endpoint、模型和提示词
-- 简洁界面与暗色模式
-- 浏览器端配置，不在项目中保存 API 密钥
+- 对网页选中文本显示操作入口。
+- 请求用户配置的 OpenAI 兼容接口。
+- 提供翻译和解释类提示词。
+- 在弹窗中配置接口地址、模型、目标语言和自定义提示词。
+- 使用 chrome.storage.sync 保存扩展配置。
 
-## Data flow and privacy
+## 安装
 
-选中的文本会发送到用户配置的 API endpoint 以生成结果；如果 endpoint 指向第三方服务，文本将受该服务的隐私政策和数据保留策略约束。请不要提交 API key，也不要对敏感内容启用未经审核的第三方 endpoint。
+该仓库没有构建步骤。请在 Chrome 扩展管理页：
 
-## Install and configure
+1. 开启开发者模式。
+2. 选择“加载已解压的扩展程序”。
+3. 选择 chrome-extension-crx 目录。
 
-1. Install the extension from the provided release or load the extension directory in Chrome developer mode.
-2. Open the settings page.
-3. Configure endpoint, model, API key, target language, and prompt.
-4. Select text on a webpage and review the result before relying on it.
+## 使用前配置
 
-## Development
+在扩展弹窗中填写你自己的模型服务配置。不要把访问令牌、密钥、私有服务地址或包含敏感提示词的设置提交到仓库、截图或 issue。
 
-Use the package manager and scripts defined by package.json. Test content scripts, permissions, settings persistence, and API failures in a clean browser profile.
+## 隐私与安全
 
-## Status
+内容脚本可运行于 HTTP(S) 网页。使用前请理解：
 
-Open-source experimental browser extension. AI output may be incomplete or incorrect; verify important translations and explanations.
+- 被选中的文本会发送到你配置的外部服务；
+- 不应选择口令、身份信息、商业机密或受限内容；
+- 模型响应是外部输入，界面渲染必须继续按不可信内容处理；
+- 使用范围应遵守目标网站、模型服务和浏览器扩展平台的条款。
+
+## 开发说明
+
+源代码位于 chrome-extension-crx/。修改 manifest、内容脚本或弹窗代码后，在 Chrome 扩展管理页重新加载扩展进行测试。
+
+## 许可证
+
+仓库当前未声明许可证。
