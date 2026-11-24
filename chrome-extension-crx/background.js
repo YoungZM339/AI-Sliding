@@ -3,6 +3,7 @@ importScripts('core.js');
 
 const core = globalThis.AISliding;
 const settingsKey = 'settingsV2';
+const approvedEndpointKey = 'approvedEndpointV2';
 const legacyKeys = [...Object.keys(core.DEFAULTS), 'customModel'];
 const popupUrl = chrome.runtime.getURL('popup.html');
 const workingTabs = new Set();
@@ -61,7 +62,14 @@ async function readJSON(resp) {
 }
 
 async function request(action, text) {
-  const s = core.cleanSettings(await readSettings());
+  await initSettings();
+  const stored = await chrome.storage.local.get([settingsKey, approvedEndpointKey]);
+  const s = core.cleanSettings(stored[settingsKey]);
+  // Chrome may count scriptable site origins as granted. Also require the
+  // user to have saved this exact endpoint from the grouped disclosure UI.
+  if (stored[approvedEndpointKey] !== s.apiEndpoint) {
+    throw new core.UserError('请打开扩展设置，确认并保存模型接口地址后再试。');
+  }
   const messages = core.messagesFor(action, text, s);
   if (!await chrome.permissions.contains({origins: [core.hostPattern(s.apiEndpoint)]})) {
     throw new core.UserError('尚未授权访问模型服务。请打开扩展设置并保存以授权。');
@@ -124,7 +132,7 @@ chrome.runtime.onMessage.addListener((message, sender, reply) => {
         throw new core.UserError('未授予接口访问权限，未保存设置。');
       }
       await initSettings();
-      await chrome.storage.local.set({[settingsKey]: settings});
+      await chrome.storage.local.set({[settingsKey]: settings, [approvedEndpointKey]: settings.apiEndpoint});
       return {ok: true, settings};
     }
     const key = fromPopup ? 'test' : sender.tab.id;
