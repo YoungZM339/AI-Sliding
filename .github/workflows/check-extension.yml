@@ -1,0 +1,31 @@
+name: Check Chrome extension
+
+on:
+  push:
+    branches: [main, 'release/*']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Core request and storage tests
+        run: node --test tests/core.test.cjs
+      - name: Local HTTP mock
+        run: node tests/browser-smoke.mjs --worker-only
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
+          npx --no-install playwright install --with-deps chromium
+      - name: Chromium extension smoke test
+        run: node tests/browser-smoke.mjs
