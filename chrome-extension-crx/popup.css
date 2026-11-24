@@ -1,145 +1,203 @@
+:root {
+  color-scheme: light dark;
+  --surface: #ffffff;
+  --text: #182336;
+  --muted: #46566b;
+  --line: #8291a5;
+  --soft: #eef3f9;
+  --accent: #1456b2;
+  --accent-hover: #104794;
+  --accent-text: #ffffff;
+  --focus: #075bd0;
+  --good: #176042;
+  --bad: #a11e32;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #161e2c;
+    --text: #edf3ff;
+    --muted: #b4c1d5;
+    --line: #75839a;
+    --soft: #242f42;
+    --accent: #9ac6ff;
+    --accent-hover: #bbd9ff;
+    --accent-text: #102746;
+    --focus: #a6d1ff;
+    --good: #89deba;
+    --bad: #ffb3c0;
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
-    width: 420px;
-    margin: 0;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #f8f9fa;
-    color: #2c3e50;
+  width: 390px;
+  max-width: 100%;
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font: 13px / 1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+.settings {
+  padding: 16px;
 }
 
-h2 {
-    margin: 0 0 25px 0;
-    color: #1a73e8;
-    font-size: 20px;
-    text-align: center;
-    font-weight: 600;
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 13px;
 }
 
-.setting-item {
-    margin-bottom: 22px;
-    display: grid;
-    grid-template-columns: 110px 1fr;
-    gap: 12px;
-    align-items: center;
+.brand-icon {
+  flex: none;
 }
 
-.setting-item label {
-    color: #4a5568;
-    font-size: 14px;
-    line-height: 1.4;
-    font-weight: 500;
+h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.25;
 }
 
-.setting-item input[type="text"],
-.setting-item input[type="password"],
-.setting-item textarea,
-.setting-item select {
-    width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 14px;
-    box-sizing: border-box;
-    background-color: white;
-    transition: all 0.2s ease;
+fieldset {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.setting-item input[type="text"]:hover,
-.setting-item input[type="password"]:hover,
-.setting-item textarea:hover,
-.setting-item select:hover {
-    border-color: #cbd5e0;
+.field {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 11px;
 }
 
-.setting-item input[type="text"]:focus,
-.setting-item input[type="password"]:focus,
-.setting-item textarea:focus,
-.setting-item select:focus {
-    border-color: #1a73e8;
-    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
-    outline: none;
+label {
+  font-weight: 630;
 }
 
-.setting-item textarea {
-    height: 80px;
-    resize: vertical;
-    font-family: inherit;
-    line-height: 1.5;
+input, select, textarea, button {
+  min-width: 0;
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
 }
 
-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 16px;
-    padding-right: 40px;
+input, select, textarea {
+  width: 100%;
+  padding: 6px 9px;
 }
 
-.status-message {
-    margin-top: 20px;
-    padding: 10px;
-    text-align: center;
-    color: #4CAF50;
-    font-size: 13px;
-    min-height: 20px;
-    background-color: #f0fff4;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+textarea {
+  resize: vertical;
 }
 
-.status-message:empty {
-    display: none;
+input::placeholder {
+  color: var(--muted);
+  opacity: 1;
 }
 
-/* 自定义滚动条样式 */
-::-webkit-scrollbar {
-    width: 8px;
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
 }
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+.hint, .privacy-note, .status {
+  margin: 0;
+  color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 4px;
+.hint, .privacy-note {
+  font-size: 12px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+.password-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
 }
 
-#customModel {
-    margin-top: -12px;
-    margin-bottom: 22px;
-    background-color: #f8f9fa;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
+.advanced {
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
 }
 
-#customModel.visible {
-    display: grid;
-    animation: slideDown 0.2s ease-out;
+summary {
+  padding: 6px 9px;
+  color: var(--text);
+  cursor: pointer;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-} 
+.advanced-fields {
+  padding: 3px 9px 0;
+}
+
+.privacy-note {
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: var(--soft);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 6px 11px;
+  font-weight: 630;
+  cursor: pointer;
+}
+
+button:not(:disabled):hover {
+  background: var(--soft);
+}
+
+button.primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+button.primary:not(:disabled):hover {
+  background: var(--accent-hover);
+}
+
+button:disabled, fieldset:disabled :is(input, select, textarea) {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+.status {
+  min-height: 1.5em;
+  margin-top: 7px;
+}
+
+.status[data-kind="success"] {
+  color: var(--good);
+}
+
+.status[data-kind="error"] {
+  color: var(--bad);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI-Sliding 智能浏览器滑动助手",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "AI-Sliding 基于大语言模型的智能滑动翻译与解释助手，让翻译和理解更加便捷",
   "permissions": [
     "storage"
@@ -29,20 +29,18 @@
         "content.css"
       ],
       "js": [
-        "marked.min.js",
         "content.js"
       ]
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "marked.min.js"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ]
-    }
+  "minimum_chrome_version": "114",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "http://[::1]/*"
   ]
 }

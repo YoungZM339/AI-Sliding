@@ -1,67 +1,88 @@
-<!DOCTYPE html>
-<html>
-
+<!doctype html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI-Sliding 设置</title>
   <link rel="stylesheet" href="popup.css">
 </head>
-
 <body>
-  <div class="container">
-    <h2>AI-Sliding 设置</h2>
+  <main class="settings">
+    <header class="page-header">
+      <img class="brand-icon" src="images/favicon-32x32.png" alt="" width="32" height="32">
+      <div>
+        <h1>AI-Sliding 设置</h1>
+        <p class="hint">连接兼容 OpenAI API 的服务</p>
+      </div>
+    </header>
 
-    <div class="setting-item">
-      <label for="apiKey">API Key</label>
-      <input type="password" id="apiKey" placeholder="请输入您的 API Key">
-    </div>
+    <form id="settingsForm" autocomplete="off" novalidate>
+      <fieldset id="settingsFields" disabled>
+        <legend class="visually-hidden">API 与语言设置</legend>
 
-    <div class="setting-item">
-      <label for="apiEndpoint">API Endpoint</label>
-      <input type="text" id="apiEndpoint" placeholder="https://api.openai.com/v1">
-    </div>
+        <div class="field">
+          <label for="apiEndpoint">API 地址</label>
+          <input type="text" id="apiEndpoint" inputmode="url" autocomplete="off"
+            autocapitalize="off" spellcheck="false" placeholder="https://api.openai.com/v1"
+            maxlength="2048" aria-describedby="endpointHint" required>
+          <p id="endpointHint" class="hint">可填基础地址或完整的 /chat/completions 地址。仅本机回环地址可以使用 HTTP。</p>
+        </div>
 
-    <div class="setting-item">
-      <label for="model">AI 模型</label>
-      <select id="model">
-        <option value="gpt-4o-mini">gpt-4o-mini</option>
-        <option value="gpt-4o">gpt-4o</option>
-        <option value="custom">自定义</option>
-      </select>
-    </div>
-    <div class="setting-item" id="customModel" style="display: none;">
-      <label for="customModelInput">自定义模型名</label>
-      <input type="text" id="customModelInput" placeholder="输入自定义模型名称">
-    </div>
+        <div class="field">
+          <label for="model">模型 ID</label>
+          <input type="text" id="model" autocomplete="off" autocapitalize="off" spellcheck="false"
+            placeholder="填写服务商提供的模型 ID" maxlength="200" aria-describedby="modelHint" required>
+          <p id="modelHint" class="hint">请填写完整模型 ID；不同服务商的名称可能不同。</p>
+        </div>
 
-    <div class="setting-item">
-      <label for="targetLanguage">目标语言</label>
-      <select id="targetLanguage">
-        <option value="中文">中文</option>
-        <option value="英语">英语</option>
-        <option value="日语">日语</option>
-        <option value="韩语">韩语</option>
-        <option value="法语">法语</option>
-        <option value="德语">德语</option>
-        <option value="西班牙语">西班牙语</option>
-        <option value="俄语">俄语</option>
-      </select>
-    </div>
+        <div class="field">
+          <label for="apiKey">API 密钥</label>
+          <div class="password-row">
+            <input type="password" id="apiKey" autocomplete="off" autocapitalize="off"
+              spellcheck="false" maxlength="2048" aria-describedby="keyHint">
+            <button type="button" class="key-toggle" id="showKey" aria-controls="apiKey" aria-pressed="false">显示密钥</button>
+          </div>
+          <p id="keyHint" class="hint">设置和密钥仅保存在当前浏览器中，不会跨设备同步。服务不需要密钥时可留空。</p>
+        </div>
 
-    <div class="setting-item">
-      <label for="translatePrompt">翻译提示词</label>
-      <textarea id="translatePrompt" placeholder="请输入翻译时使用的提示词"></textarea>
-    </div>
+        <div class="field">
+          <label for="targetLanguage">翻译目标语言</label>
+          <select id="targetLanguage">
+            <option value="中文">中文</option>
+            <option value="英语">英语</option>
+            <option value="日语">日语</option>
+            <option value="韩语">韩语</option>
+            <option value="法语">法语</option>
+            <option value="德语">德语</option>
+            <option value="西班牙语">西班牙语</option>
+            <option value="俄语">俄语</option>
+          </select>
+        </div>
 
-    <div class="setting-item">
-      <label for="explainPrompt">解释提示词</label>
-      <textarea id="explainPrompt" placeholder="请输入解释时使用的提示词"></textarea>
-    </div>
+        <details class="advanced">
+          <summary>自定义提示词</summary>
+          <div class="advanced-fields">
+            <div class="field">
+              <label for="translatePrompt">翻译提示词</label>
+              <textarea id="translatePrompt" rows="3" maxlength="4000"></textarea>
+            </div>
+            <div class="field">
+              <label for="explainPrompt">解释提示词</label>
+              <textarea id="explainPrompt" rows="3" maxlength="4000"></textarea>
+            </div>
+          </div>
+        </details>
+      </fieldset>
 
-    <div class="status-message" id="statusMessage"></div>
-  </div>
+      <p class="privacy-note">仅在你点击「翻译」或「解释」时，扩展才会把选中的文本发送给你设置的 API 服务。测试连接只发送一段固定的测试文本，不读取网页内容。</p>
+      <div class="actions">
+        <button type="submit" id="saveSettings" class="primary" disabled>保存设置</button>
+        <button type="button" id="testConnection" disabled>测试连接</button>
+      </div>
+      <p id="statusMessage" class="status" role="status" aria-atomic="true">正在读取设置…</p>
+    </form>
+  </main>
+  <script src="core.js"></script>
   <script src="popup.js"></script>
 </body>
-
 </html>
